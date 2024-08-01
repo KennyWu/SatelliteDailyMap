@@ -8,6 +8,7 @@ import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
 import { fillStringTemplate } from "./util";
 import * as Constants from "./Constants.js";
+import DateCustom from "./CustomComponents/DateCustom.js";
 
 const CURRPROJ = "ESPG:4326";
 const EXTENT = [-180, -90, 180, 90];
@@ -105,9 +106,15 @@ export function regLayerChanges(map) {
 
   let changeAllLayers = function (event) {
     let dateTime = document.querySelector(Constants.SELECTORS.DATE);
-    let year = dateTime.getYear();
-    let month = Constants.MONTHMAP[dateTime.getMonth()];
-    let layers = getLayersAtDate(year + month);
+    let date = dateTime.getDate();
+    let monthString = Constants.MONTHMAP[Constants.monthNames[date.getMonth()]];
+    let yearString = String(date.getFullYear());
+    let dayString = DateCustom.convertToDayString(date.getDate());
+    let layers = getLayersAtDate({
+      yearString: yearString,
+      monthString: monthString,
+      dayString: dayString,
+    });
     layers.forEach((layer, i) => map.getLayers().setAt(i + 1, layer));
   };
   /*
@@ -145,7 +152,10 @@ export function loadLayers(pl, date = null, regEnable = true) {
 
   const [templateVars, layerVars] = getElementValues(plElements);
   if (date != null) {
-    templateVars.yyyymm = date;
+    templateVars.yyyymmdd = date.yearString + date.monthString + date.dayString;
+    templateVars.dd = date.dayString;
+    templateVars.mm = date.monthString;
+    templateVars.yyyy = date.yearString;
   }
   layerVars.zIndex = Constants.PRODUCT_LAYERS_ID_MAPPING[pl];
   let dataURL = fillStringTemplate(Constants.IMAGE_TEMPLATE_URL, templateVars);
@@ -190,9 +200,10 @@ function loadLayer(dataType, layerVars, dataURL, legendURL) {
 }
 
 function getElementValues(plElements) {
-  let month =
-    Constants.MONTHMAP[plElements[Constants.SELECTORS.DATE].getMonth()];
-  let year = plElements[Constants.SELECTORS.DATE].getYear();
+  let date = plElements[Constants.SELECTORS.DATE].getDate();
+  let mm = Constants.MONTHMAP[Constants.monthNames[date.getMonth()]];
+  let yyyy = String(date.getFullYear());
+  let dd = DateCustom.convertToDayString(date.getDate());
   let day =
     plElements[Constants.SELECTORS.DAY_NIGHT].style.display !==
     Constants.DAYNIGHT.NONE
@@ -212,7 +223,7 @@ function getElementValues(plElements) {
       return plElements[Constants.SELECTORS.PRODUCT_LAYER].value === name;
     }
   );
-  let yyyymm = year + month;
+  let yyyymmdd = yyyy + mm + dd;
   let fileformat =
     dataType === Constants.DATATYPE.BORDERS
       ? Constants.FILEFORMAT.JSON
@@ -220,7 +231,10 @@ function getElementValues(plElements) {
   let satellite = plElements[Constants.SELECTORS.SATELLITE].value;
   return [
     {
-      yyyymm: yyyymm,
+      dd: dd,
+      mm: mm,
+      yyyy: yyyy,
+      yyyymmdd: yyyymmdd,
       "day[night]": day,
       satellite: satellite,
       datatype: dataType,

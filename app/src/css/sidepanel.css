@@ -27,7 +27,6 @@
 }
 
 .animation-settings {
-  /* border: 1px black solid; */
   padding: 5px;
   border-radius: 5px;
   margin-top: 5px;
@@ -37,10 +36,6 @@
   font-size: 1.2rem;
   margin: 0px 0px 0px 0px;
   font-weight: normal;
-}
-
-.btn-month {
-  background-color: whitesmoke;
 }
 
 td {
@@ -163,7 +158,6 @@ input[type="checkbox"] {
 }
 
 .btn-select {
-  min-width: 100%;
   border: 1px solid gray;
 }
 

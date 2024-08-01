@@ -1,5 +1,6 @@
 export const IMAGE_TEMPLATE_URL =
-  "https://www.star.nesdis.noaa.gov/smcd/emb/land/__products/test/{yyyymm}/{datatype}_{satellite}_{variable}_{yyyymm}_{day[night]}.{fileformat}";
+  "https://www.star.nesdis.noaa.gov/smcd/emb/land/__products/test/daily/{yyyy}/{mm}/{dd}/{datatype}_{satellite}_{variable}_{yyyymmdd}_{day[night]}.{fileformat}";
+
 export const LEGEND_TEMPLATE_URL =
   "./legend/legend_{variable}_{day[night]}.png";
 export const PRODUCT_LAYERS_ID_MAPPING = { "#pl-1": 1, "#pl-2": 2, "#pl-3": 3 };
@@ -44,28 +45,6 @@ export const ANOMALYMAPPING = {
   ),
   LST: fillConstants("lst", "LST", [SATELLITE.JPSS, SATELLITE.MODIS], true),
   LST_BORDERS: fillConstants("lsta", "LST Borders", [SATELLITE.JPSS], true),
-  LAIA: fillConstants("laia", "LAI Anomaly", [SATELLITE.MODIS], false),
-  LAI: fillConstants("lai", "LAI", [SATELLITE.MODIS], false),
-  NDVIA: fillConstants("ndvia", "NDVI Anomaly", [SATELLITE.MODIS], false),
-  NDVI: fillConstants("ndvi", "NDVI", [SATELLITE.MODIS], false),
-  ETA: fillConstants("eta", "ET Anomaly", [SATELLITE.MODIS], false),
-  ET: fillConstants("et", "ET", [SATELLITE.MODIS], false),
-  ALBEDOA: fillConstants("albedoa", "ALBEDO Anomaly", [SATELLITE.MODIS], false),
-  ALBEDO: fillConstants("albedo", "ALBEDO", [SATELLITE.MODIS], false),
-  ALBEDO_SFA: fillConstants(
-    "albedo-sfa",
-    "ALBEDO-SF Anomaly",
-    [SATELLITE.MODIS],
-    false
-  ),
-  ALBEDO_SF: fillConstants("albedo-sf", "ALBEDO-SF", [SATELLITE.MODIS], false),
-  PRCP_GPMA: fillConstants(
-    "prcp-gpma",
-    "PRCP GPM Anomaly",
-    [SATELLITE.GPM],
-    false
-  ),
-  PRCP_GPMA: fillConstants("prcp-gpm", "PRCP GPM", [SATELLITE.GPM], false),
 };
 
 export const DATATYPE = {
@@ -82,33 +61,33 @@ export const DAYNIGHT = {
   NONE: "none",
 };
 export const MONTHMAP = {
-  January: "01",
-  February: "02",
-  March: "03",
-  April: "04",
+  Jan: "01",
+  Feb: "02",
+  Mar: "03",
+  Apr: "04",
   May: "05",
   June: "06",
   July: "07",
-  August: "08",
-  September: "09",
-  October: "10",
-  November: "11",
-  December: "12",
+  Aug: "08",
+  Sept: "09",
+  Oct: "10",
+  Nov: "11",
+  Decr: "12",
 };
 
 export const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
   "May",
   "June",
   "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 export const CONTINENTS = ["Global", "AF", "AS", "EU", "NA", "OC", "SA"];
@@ -148,6 +127,8 @@ export const CONTINENT_VIEWS = {
   },
 };
 
+export const NON_PROPERTIES = new Set(["geometry", "border_color"]);
+
 function fillConstants(variable, name, satellites, hasDayNight) {
   return {
     variable: variable,
@@ -157,9 +138,11 @@ function fillConstants(variable, name, satellites, hasDayNight) {
   };
 }
 
-export const MIN_YEAR_LOOKBACK = 2014;
-export const LOOP_END_BEGIN_EVENT = "Loop-end-begin";
-export const LOOP_BEGIN_END_EVENT = "Loop-begin-end";
+export const MIN_YEAR_LOOKBACK = 2022;
+export const VALID_YEARS_RANGE = [2022, 2023, 2024];
+export const VALID_DAY_RANGE = Array.from({ length: 31 }, (v, k) => k + 1);
+export const FORWARD = "forward-change";
+export const BACKWARD = "backward-change";
 
 Object.freeze(CONTINENT_VIEWS);
 Object.freeze(SELECTORS);
