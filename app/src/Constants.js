@@ -72,7 +72,7 @@ export const MONTHMAP = {
   Sept: "09",
   Oct: "10",
   Nov: "11",
-  Decr: "12",
+  Dec: "12",
 };
 
 export const monthNames = [
