@@ -138,8 +138,8 @@ function fillConstants(variable, name, satellites, hasDayNight) {
   };
 }
 
-export const MIN_YEAR_LOOKBACK = 2022;
-export const VALID_YEARS_RANGE = [2022, 2023, 2024];
+export const MIN_YEAR_LOOKBACK = 2014;
+export const VALID_YEARS_RANGE = [2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
 export const VALID_DAY_RANGE = Array.from({ length: 31 }, (v, k) => k + 1);
 export const FORWARD = "forward-change";
 export const BACKWARD = "backward-change";
