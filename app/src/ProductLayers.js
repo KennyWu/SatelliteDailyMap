@@ -15,7 +15,7 @@ const EXTENT = [-180, -90, 180, 90];
 const LST_BORDER_STYLE = function (feature) {
   return new Style({
     stroke: new Stroke({
-      color: feature.get("border_color") == "red" ? "red" : "blue",
+      color: feature.get("border_color") == "red" ? "FireBrick" : "DarkViolet",
       width: 2
     }),
     fill: new Fill({
