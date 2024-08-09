@@ -50,7 +50,7 @@ class DateCustom extends HTMLElement {
     this.#daySelector = this.querySelector(DateCustom.#DAYSELECT);
     this.#yearSelector = this.querySelector(DateCustom.#YEARSELECT);
     this.#currDate = new Date();
-    this.#currDate.setDate(this.#currDate.getDate() - 1);
+    this.#currDate.setDate(this.#currDate.getDate() - 2);
     this.#maxDate = new Date(
       this.#currDate.getFullYear(),
       this.#currDate.getMonth(),
