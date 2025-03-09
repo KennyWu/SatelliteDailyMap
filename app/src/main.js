@@ -52,7 +52,7 @@ function main() {
     view: view,
   });
   map.setLayers(ProductLayers.initLayers());
-  const ol3d = new OLCesium({ map: map });
+  const ol3d = new OLCesium({ map: map, target: "map" });
   ProductLayers.regLayerChanges(map);
   ProductLayers.regLayerChanges(map);
   changeContinentSelectMode();
