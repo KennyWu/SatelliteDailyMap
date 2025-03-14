@@ -14,26 +14,16 @@ import * as ProductLayers from "./ProductLayers.js";
 import { createXYDirString, fillStringTemplate } from "./util.js";
 import { initAnimationService } from "./Animation.js";
 import OLCesium from "olcs";
+import MapOverlay from "./Overlay.js";
 
 const currProj = "ESPG:4326";
 const extent = [-180, -125, 180, 125];
-const container = document.getElementById("popup");
-const content = document.getElementById("popup-content");
-const closer = document.getElementById("popup-closer");
 const view = new View({
   projection: "EPSG:4326",
   extent: extent,
   center: [0, 0],
   zoom: 2,
   maxZoom: 8,
-});
-const overlay = new Overlay({
-  element: container,
-  autoPan: {
-    animation: {
-      duration: 250,
-    },
-  },
 });
 let map = null;
 
@@ -46,17 +36,16 @@ let animateIndex = 1;
 
 function main() {
   map = new Map({
-    overlays: [overlay],
     controls: init_controls(),
     target: "map",
     view: view,
   });
   map.setLayers(ProductLayers.initLayers());
   const ol3d = new OLCesium({ map: map, target: "map" });
+  const overlay = new MapOverlay(map, ol3d, ol3d.getCesiumScene());
   ProductLayers.regLayerChanges(map);
   ProductLayers.regLayerChanges(map);
   changeContinentSelectMode();
-  registerMapHandlers();
   registerViewHandlers(map, ol3d);
   initAnimationService(map);
 }
@@ -78,41 +67,6 @@ function init_controls() {
     })
   );
   return control;
-}
-
-function registerMapHandlers() {
-  map.on("singleclick", function (evt) {
-    let feature = map.forEachFeatureAtPixel(
-      evt.pixel,
-      function (feature, layer) {
-        return feature;
-      }
-    );
-
-    if (feature) {
-      //update for dynamic showing - use feature.getKeys() to get names
-      // dynamically show the stuf next time
-      let information = '<p class="pop-info">';
-      Object.keys(feature.getProperties()).forEach((key, i) => {
-        if (!Constants.NON_PROPERTIES.has(key)) {
-          information += `<p class="pop-info"><strong>${key}</strong>: ${feature.get(
-            key
-          )}</p>`;
-        }
-      });
-      information += "</p>";
-      content.innerHTML = information;
-      overlay.setPosition(evt.coordinate);
-    } else {
-      overlay.setPosition(undefined);
-    }
-  });
-
-  closer.onclick = function () {
-    overlay.setPosition(undefined);
-    closer.blur();
-    return false;
-  };
 }
 
 function changeContinentSelectMode() {
