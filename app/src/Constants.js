@@ -12,7 +12,8 @@ export const ANIMATE_PRODUCT_LAYER_ENABLE = [
 export const SELECTORS = {
   DAY_NIGHT: ".day-night-selector",
   OPACITY: ".opacity",
-  PRODUCT_LAYER: ".product-layer-type",
+  PRODUCT_LAYER_TYPE: ".product-layer-type",
+  PRODUCT_LAYER: ".product-layer",
   VISIBLE: ".visible",
   DATE: "#date",
   SATELLITE: ".satellite",
@@ -91,7 +92,15 @@ export const monthNames = [
   "Dec",
 ];
 
-export const CONTINENTS = ["Global", "Africa", "Asia", "Europe", "N_America", "Oceania", "S_America"];
+export const CONTINENTS = [
+  "Global",
+  "Africa",
+  "Asia",
+  "Europe",
+  "N_America",
+  "Oceania",
+  "S_America",
+];
 
 export const CONTINENT_VIEWS = {
   Global: {
@@ -129,6 +138,24 @@ export const CONTINENT_VIEWS = {
 };
 
 export const NON_PROPERTIES = new Set(["geometry", "border_color"]);
+
+export const DEFAULT_OPTION_PRODUCT = [
+  {
+    id: SELECTORS.PRODUCT_LAYER_ONE,
+    layer: ANOMALYMAPPING.LSTA.name,
+    show: true,
+  },
+  {
+    id: SELECTORS.PRODUCT_LAYER_TWO,
+    layer: ANOMALYMAPPING.LST_BORDERS.name,
+    show: true,
+  },
+  {
+    id: SELECTORS.PRODUCT_LAYER_THREE,
+    layer: ANOMALYMAPPING.LSTA.name,
+    show: false,
+  },
+];
 
 function fillConstants(variable, name, satellites, hasDayNight) {
   return {
