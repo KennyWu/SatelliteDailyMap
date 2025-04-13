@@ -54,7 +54,7 @@ class DateCustom extends HTMLElement {
     this.#maxDate = new Date(
       this.#currDate.getFullYear(),
       this.#currDate.getMonth(),
-      this.#currDate.getDate()
+      this.#currDate.getDate() - 1
     );
 
     this.#minDate = new Date(Constants.MIN_YEAR_LOOKBACK, 0, 1);

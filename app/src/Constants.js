@@ -30,6 +30,7 @@ export const SELECTORS = {
   ANIMATION_CONFIGURE: "#animation-configure",
   ANIMATION_PRODUCT_LAYER: "#animation-product-layer",
   VIEW_3D: "#view-3d",
+  LEGEND: "#legend",
 };
 
 export const SATELLITE = {

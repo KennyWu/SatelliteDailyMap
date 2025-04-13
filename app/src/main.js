@@ -15,6 +15,8 @@ import { createXYDirString, fillStringTemplate } from "./util.js";
 import { initAnimationService } from "./Animation.js";
 import OLCesium from "olcs";
 import MapOverlay from "./Overlay.js";
+import { renderLegend } from "./Layers.js";
+import "./Draggable.js";
 
 const currProj = "ESPG:4326";
 const extent = [-180, -125, 180, 125];
@@ -41,6 +43,7 @@ function main() {
     view: view,
   });
   map.setLayers(ProductLayers.initLayers());
+  renderLegend(map.getLayers().getArray());
   const ol3d = new OLCesium({ map: map, target: "map" });
   const overlay = new MapOverlay(map, ol3d, ol3d.getCesiumScene());
   ProductLayers.regLayerChanges(map);
@@ -51,9 +54,7 @@ function main() {
 }
 
 function init_controls() {
-  let control = defaultControls();
-  control.pop();
-  control.push(newAttribution);
+  let control = defaultControls({ attribution: false });
   control.push(
     new FullScreen({
       source: document.getElementById("screen"),
